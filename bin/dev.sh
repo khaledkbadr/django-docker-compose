@@ -2,6 +2,7 @@
 # bin/dev
 # environment variables to be defined externally for security
 DOMAIN=myproject.local
+BUILD_ENV="dev" \
 DJANGO_USE_DEBUG=1 \
 DJANGO_USE_DEBUG_TOOLBAR=1 \
 SITE_HOST="$DOMAIN" \

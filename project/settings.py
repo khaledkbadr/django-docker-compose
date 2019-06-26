@@ -25,7 +25,7 @@ SECRET_KEY = "=mz@tj%juc@=o*6bl1s+c+-$jd2nou_u#$$o@0&h!sgobpf6ln"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 if os.environ.get("SITE_HOST"):
     ALLOWED_HOSTS.append(os.environ.get("SITE_HOST"))
@@ -125,30 +125,30 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 
-# LOGGING = {
-#     "version": 1,
-#     "formatters": {
-#         "verbose": {
-#             "format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
-#         },
-#         "simple": {"format": "%(levelname)s %(message)s"},
-#     },
-#     "handlers": {
-#         "console": {
-#             "level": "DEBUG",
-#             "class": "logging.StreamHandler",
-#             "formatter": "simple",
-#         },
-#         "file": {
-#             "level": "DEBUG",
-#             "class": "logging.FileHandler",
-#             "filename": "/var/log/app.log",
-#             "formatter": "simple",
-#         },
-#     },
-#     "loggers": {"django": {"handlers": ["file"], "level": "DEBUG", "propagate": True}},
-# }
+LOGGING = {
+    "version": 1,
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
+        },
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "/var/log/app.log",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {"django": {"handlers": ["file"], "level": "DEBUG", "propagate": True}},
+}
 
-# if DEBUG:
-#     for logger in LOGGING["loggers"]:
-#         LOGGING["loggers"][logger]["handlers"] = ["console"]
+if DEBUG:
+    for logger in LOGGING["loggers"]:
+        LOGGING["loggers"][logger]["handlers"] = ["console"]

@@ -4,10 +4,12 @@ RUN apt-get update \
     postgresql-client
 
 WORKDIR /usr/src/app
-ADD config/requirements.txt ./
+
+ARG BUILD_ENV=prod
+ADD config/requirements ./requirements
 
 RUN pip3 install --upgrade pip; \
-    pip3 install -r requirements.txt
+    pip3 install -r requirements/${BUILD_ENV}.txt
 
 RUN git clone https://github.com/vishnubob/wait-for-it.git
 
