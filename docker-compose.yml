@@ -42,10 +42,30 @@ services:
     depends_on:
       - db
     environment:
+      - "DJANGO_USE_DEBUG"
+      - "DJANGO_USE_DEBUG_TOOLBAR"
       - "SITE_HOST"
+      - "MEDIA_HOST"
+      - "STATIC_HOST"
       - "POSTGRES_HOST=db"
       - "POSTGRES_USER"
       - "POSTGRES_PASSWORD"
       - "POSTGRES_DB"
       - "VIRTUAL_PORT=8000"
       - "VIRTUAL_HOST=${SITE_HOST}"
+  media:
+    image: "httpd:latest"
+    volumes:
+      - "./media:/usr/local/apache2/htdocs"
+    ports:
+      - "80"
+    environment:
+      - "VIRTUAL_HOST=${MEDIA_HOST}"
+  static:
+    image: "httpd:latest"
+    volumes:
+      - "./static:/usr/local/apache2/htdocs"
+    ports:
+      - "80"
+    environment:
+      - "VIRTUAL_HOST=${STATIC_HOST}"

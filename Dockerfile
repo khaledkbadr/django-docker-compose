@@ -5,7 +5,7 @@ RUN apt-get update \
 
 WORKDIR /usr/src/app
 
-ARG BUILD_ENV=prod
+ARG BUILD_ENV=dev
 ADD config/requirements ./requirements
 
 RUN pip3 install --upgrade pip; \

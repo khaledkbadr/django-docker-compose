@@ -23,13 +23,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "=mz@tj%juc@=o*6bl1s+c+-$jd2nou_u#$$o@0&h!sgobpf6ln"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+if os.environ.get("DJANGO_USE_DEBUG"):
+    DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# DEBUG = False
 if os.environ.get("SITE_HOST"):
     ALLOWED_HOSTS.append(os.environ.get("SITE_HOST"))
-
 
 # Application definition
 
@@ -51,6 +52,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+if os.environ.get("DJANGO_USE_DEBUG_TOOLBAR"):
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "myproject.urls"
 
@@ -119,12 +124,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = "/static/"
-
-
 LOGGING = {
     "version": 1,
     "formatters": {
@@ -152,3 +151,19 @@ LOGGING = {
 if DEBUG:
     for logger in LOGGING["loggers"]:
         LOGGING["loggers"][logger]["handlers"] = ["console"]
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "site_static")]
+if os.environ.get("STATIC_HOST"):
+    STATIC_DOMAIN = os.environ.get("STATIC_HOST")
+    STATIC_URL = "http://%s/" % STATIC_DOMAIN
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+if os.environ.get("MEDIA_HOST"):
+    MEDIA_DOMAIN = os.environ.get("MEDIA_HOST")
+    MEDIA_URL = "http://%s/" % MEDIA_DOMAIN
